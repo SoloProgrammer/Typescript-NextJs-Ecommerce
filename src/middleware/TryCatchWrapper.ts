@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
 import { ErrorResponse } from "../utils/responses";
 import ErrorHandler from "../lib/exceptions";
-
-type HandlerType = (req: NextRequest, ...args: any[]) => void;
+import { HandlerType } from "@/types/types";
 
 export const TryCatch =
   (handler: HandlerType) =>

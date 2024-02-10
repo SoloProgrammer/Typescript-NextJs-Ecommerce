@@ -1,4 +1,4 @@
-import { TryCatch } from "@/helpers/TryCatchWrapper";
+import { TryCatch } from "@/middleware/TryCatchWrapper";
 import { connectDB } from "@/lib/connect";
 import { Product } from "@/models/product";
 import { SuccessResponse } from "@/utils/responses";
