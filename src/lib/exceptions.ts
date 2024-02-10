@@ -4,4 +4,4 @@ class ErrorHandler extends Error {
     this.statusCode = statusCode;
   }
 }
-export default ErrorHandler
+export default ErrorHandler;

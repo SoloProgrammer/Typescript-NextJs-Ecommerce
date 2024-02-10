@@ -1,11 +1,11 @@
+import connectDB from "@/lib/connect";
 import { TryCatch } from "@/middleware/TryCatchWrapper";
-import { connectDB } from "@/lib/connect";
 import { Product } from "@/models/product";
 import { SuccessResponse } from "@/utils/responses";
-import { NextRequest } from "next/server";
 
 connectDB();
-export const GET = TryCatch(async (req: NextRequest) => {
+
+export const GET = TryCatch(async (req) => {
   const products = await Product.find({});
-  return SuccessResponse("All products fetched", 200, products);
+  return SuccessResponse("Products fetched", 200, products);
 });

@@ -1,11 +1,31 @@
 import { TryCatch } from "@/middleware/TryCatchWrapper";
-import ErrorHandler from "@/lib/exceptions";
-import { SuccessResponse } from "@/utils/responses";
+import { Product } from "@/models/product";
+import { ErrorResponse, SuccessResponse } from "@/utils/responses";
 
-export const GET = TryCatch(async (req, { params }) => {
+type paramsType = {
+  params: {
+    slug: String;
+  };
+};
+
+export const GET = TryCatch(async (req, { params }: paramsType) => {
   const { slug } = params;
-  const { searchParams } = new URL(req.url);
-  const page = searchParams.get("page");
-  if (!page) throw new ErrorHandler("page query not found", 400);
-  return SuccessResponse("Success", 200, { page, slug });
+
+  const product = await Product.findOne({ slug });
+
+  if (!product) return ErrorResponse("Product not found!", 404);
+
+  return SuccessResponse("Slug extracted", 200, product);
+});
+
+export const PUT = TryCatch(async (req, { params }: paramsType) => {
+  const updatedData = await req.json();
+
+  const { slug } = params;
+  const udpateStats = await Product.updateOne(
+    { slug },
+    { $set: { ...updatedData } }
+  );
+
+  return SuccessResponse("Product updated successfully!", 201, { udpateStats });
 });

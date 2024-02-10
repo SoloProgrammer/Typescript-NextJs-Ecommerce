@@ -1,33 +1,34 @@
-import _mongoose, { connect } from "mongoose";
+import mongoose, { connect } from "mongoose";
 import ErrorHandler from "./exceptions";
 
 declare global {
-  var conn: typeof _mongoose | null;
+  var conn: typeof mongoose | null;
 }
 
 let conn = global.conn;
 
 const MONGO_URI = process.env.MONGO_URI;
-
 if (!MONGO_URI) {
   throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
+    "Please add MONGO_URI environment variable in the .env.local file!"
   );
 }
 
-export const connectDB = async () => {
+const connectDB = async () => {
   if (process.env.NODE_ENV === "production") {
     return await connect(MONGO_URI);
   } else {
+    if (conn) return conn;
     try {
-      if (conn) return conn;
       conn = await connect(MONGO_URI);
       return conn;
     } catch (error) {
       console.log(
-        "Error while connected to MONGO: ",
-        (error as ErrorHandler).message
+        "Error while connecting with MongoDB!",
+        (error as ErrorHandler)?.message
       );
     }
   }
 };
+
+export default connectDB;
