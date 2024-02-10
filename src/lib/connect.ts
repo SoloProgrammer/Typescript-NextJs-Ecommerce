@@ -1,4 +1,5 @@
 import _mongoose, { connect } from "mongoose";
+import ErrorHandler from "./exceptions";
 
 declare global {
   var conn: typeof _mongoose | null;
@@ -18,9 +19,15 @@ export const connectDB = async () => {
   if (process.env.NODE_ENV === "production") {
     return await connect(MONGO_URI);
   } else {
-    if (conn) return conn;
-    conn = await connect(MONGO_URI);
-    return conn;
+    try {
+      if (conn) return conn;
+      conn = await connect(MONGO_URI);
+      return conn;
+    } catch (error) {
+      console.log(
+        "Error while connected to MONGO: ",
+        (error as ErrorHandler).message
+      );
+    }
   }
 };
-

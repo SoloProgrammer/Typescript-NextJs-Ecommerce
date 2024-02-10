@@ -1,7 +1,7 @@
-import { TryCatch } from "@/app/helpers/TryCatchWrapper";
-import { connectDB } from "@/app/lib/connect";
-import { Product } from "@/app/models/product";
-import { SuccessResponse } from "@/app/utils/responses";
+import { TryCatch } from "@/helpers/TryCatchWrapper";
+import { connectDB } from "@/lib/connect";
+import { Product } from "@/models/product";
+import { SuccessResponse } from "@/utils/responses";
 import { NextRequest } from "next/server";
 
 connectDB();
