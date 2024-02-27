@@ -1,3 +1,4 @@
+import connectDB from "@/lib/connect";
 import { TryCatch } from "@/middleware/TryCatchWrapper";
 import { Product } from "@/models/product";
 import { ErrorResponse, SuccessResponse } from "@/utils/responses";
@@ -7,6 +8,8 @@ type paramsType = {
     slug: String;
   };
 };
+
+connectDB();
 
 export const GET = TryCatch(async (req, { params }: paramsType) => {
   const { slug } = params;
